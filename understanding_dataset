@@ -1,0 +1,55 @@
+""" 
+Automatidata Project:
+A fictional data consulting firm - Automatidata - working for a client - New York City Taxi and Limousine Commission (TLC) - 
+ to build a regression model that predicts taxi cab fares. 
+ In this part of the project, the Automatidata data team performed a preliminary inspection of the data supplied by the NYC Taxi 
+ and Limousine Commission in order to inform the team of key data variable descriptions,
+ and ensure the information provided is suitable for generating clear and meaningful insights.
+
+"""
+
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv('2017_Yellow_Taxi_Trip_Data.csv')
+print('done')
+
+
+#understand and inspect the data
+df.info()
+df.head(10)
+df.describe()
+
+#sort the data by trip distance from maximum to minimum
+df_sort = df.sort_values(by=['trip_distance'], ascending=False)
+df_sort.head(10)
+
+#sort total amount and print the last 20 entries
+total_amount_sorted.tail(20)
+
+#each payment type represented in the dataset
+df['payment_type'].value_counts()
+
+#average tip for trips paid for with credit card
+avg_cc_tip = df[df['payment_type']==1]['tip_amount'].mean()
+print('Average credit card tip: ', avg_cc_tip)
+
+#average tip for trips paid for with cash
+avg_cash_tip = df[df['payment_type']==2]['tip_amount'].mean()
+print('Average cash tip: ', avg_cash_tip)
+
+
+#how many times is each vendor ID represented in the data - 1=Creative Mobile Technologies, 2=VeriFone Inc
+df['VendorID'].value_counts()
+
+#mean total for each vendor
+df.groupby(['VendorID']).mean(numeric_only=True)[['total_amount']]
+
+#filter data for credit card payment only
+credit_card = df[df['payment_type']==1]
+
+#filter data for credit card only for passenger count
+credit_card['passenger_count'].value_counts()
+
+#average tip amount for each passenger count(credit card payments only)
+credit_card.groupby(['passenger_count']).mean(numeric_only=True)[['tip_amount']]
